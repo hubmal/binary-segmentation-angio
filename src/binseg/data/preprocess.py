@@ -7,7 +7,7 @@ import torchvision.transforms.functional as F
 
 
 class ImproveContrast(v2.Transform):
-    def forward(self, img, mask):
+    def forward(self, img, mask=None):
         img_np = img.permute(1, 2, 0).numpy() if isinstance(img, torch.Tensor) else np.array(img)
         
         if img_np.ndim == 3 and img_np.shape[-1] == 3:
@@ -23,9 +23,12 @@ class ImproveContrast(v2.Transform):
         img_np = clahe.apply(img_np)
 
         img_tensor = F.to_tensor(img_np)
-        mask_tensor = (F.pil_to_tensor(mask) / 255).float()
 
-        return tv_tensors.Image(img_tensor), tv_tensors.Mask(mask_tensor)
+        if mask is not None:
+            mask_tensor = (F.pil_to_tensor(mask) / 255).float()
+            return tv_tensors.Image(img_tensor), tv_tensors.Mask(mask_tensor)
+        else:
+            return tv_tensors.Image(img_tensor)
     
 def get_transforms(img_size=(512, 512), train=True):
     if train:

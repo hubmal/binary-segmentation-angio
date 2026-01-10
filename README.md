@@ -19,3 +19,9 @@ uv sync
 ```
 uv run scripts/train_binary.py
 ```
+
+4. You can make prediction on chosen image and save result
+
+```
+uv run scripts/test_prediction_binary.py
+```
