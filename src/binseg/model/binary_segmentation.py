@@ -4,6 +4,7 @@ import pytorch_lightning as pl
 from torchmetrics.classification import JaccardIndex, F1Score
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 import torchvision
+import torchvision.transforms.functional as F
 
 from binseg.model.deeplab import DeepLab
 from binseg.util.loss import binary_dice_loss
@@ -123,6 +124,8 @@ class BinarySegmentationTrainer(pl.LightningModule):
         imgs = imgs.detach().cpu()
         preds = preds.detach().cpu()
         labels = labels.detach().cpu()
+
+        imgs = F.rgb_to_grayscale(torch.clamp(imgs / 2 + 0.5, 0.0, 1.0))
 
         grid = torch.cat([imgs, preds, labels], dim=3)
         grid = torchvision.utils.make_grid(grid, nrow=2)

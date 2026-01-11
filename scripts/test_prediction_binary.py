@@ -35,6 +35,6 @@ def run_inference(image_path: str, checkpoint_path: str, output_path: str = "res
 
 if __name__ == "__main__":
     IMG_PATH = "/home/shared/angio-binary-dataset/images/1.png"
-    CKPT_PATH = "/home/hubert/binary-segmentation-angio/checkpoints/binary_segmentation-epoch-epoch=99.ckpt"
+    CKPT_PATH = "/home/hubert/binary-segmentation-angio/checkpoints/binary_segmentation-epoch-epoch=99-v1.ckpt"
     
     run_inference(IMG_PATH, CKPT_PATH)

@@ -4,7 +4,7 @@ import torchvision.models.segmentation as segmentation
 
 
 class DeepLab(nn.Module):
-    def __init__(self, in_channels=1):
+    def __init__(self, in_channels=3):
         super().__init__()
         self.model = segmentation.deeplabv3_resnet101(pretrained=True)
         self.model.classifier = segmentation.deeplabv3.DeepLabHead(2048, 1)

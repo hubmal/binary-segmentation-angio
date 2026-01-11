@@ -29,19 +29,33 @@ class ImproveContrast(v2.Transform):
             return tv_tensors.Image(img_tensor), tv_tensors.Mask(mask_tensor)
         else:
             return tv_tensors.Image(img_tensor)
-    
+        
+class Ensure3Channels(v2.Transform):
+    def forward(self, img, mask=None):
+        if img.shape[0] == 1:
+            img = img.repeat(3, 1, 1)
+        
+        if mask is None:
+            return img
+        else:
+            return img, mask
+        
 def get_transforms(img_size=(512, 512), train=True):
     if train:
         return v2.Compose([
             ImproveContrast(),
+            Ensure3Channels(),
             v2.Resize(img_size),
             v2.RandomHorizontalFlip(p=0.5),
             v2.RandomRotation(degrees=15),
             v2.ToDtype(torch.float32, scale=True),
+            v2.Normalize(mean=[0.5]*3, std=[0.5]*3)
         ])
     else:
         return v2.Compose([
             ImproveContrast(),
+            Ensure3Channels(),
             v2.Resize(img_size),
             v2.ToDtype(torch.float32, scale=True),
+            v2.Normalize(mean=[0.5]*3, std=[0.5]*3)
         ])
