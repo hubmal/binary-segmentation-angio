@@ -8,11 +8,7 @@
 uv sync
 ```
 
-2. Ensure dataset is available. If not, you can download it from s3
-
-```
-./scripts/download_dataset.sh
-```
+2. Ensure aia_dataset is available. If not, see: TODO
 
 3. Train binary segmentation model
 
