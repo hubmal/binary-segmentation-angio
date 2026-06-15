@@ -5,5 +5,5 @@ from binseg.data.lightning_binary import ICABinaryDataModule
 train_with_clearml(
     "binary_segmentation",
     BinarySegmentationTrainer(lr=1e-4),
-    ICABinaryDataModule(root="/home/shared/angio-binary-dataset")
+    ICABinaryDataModule(root="/home/hubert/data-generation-angio/aia_dataset", split=True)
 )
